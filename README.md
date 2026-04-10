@@ -1,4 +1,5 @@
 # Social Media Caption Generator — Claude Skill
+![telegram-cloud-photo-size-4-5963180594780900430-y](https://github.com/user-attachments/assets/0d350edc-81f0-43b7-a153-8dcd2eba38cf)
 
 > **Social media caption generator for Claude Code.** Turn any text, script,
 > screenshot, or competitor post into ready-to-post captions for all 7 major
