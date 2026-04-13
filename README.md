@@ -131,7 +131,7 @@ I built this skill because I was spending 30 minutes per post writing captions f
 - 🎓 **[Join Knox Community on Skool](https://www.skool.com/knox-community-7232/)** — n8n library, cold outreach systems, Claude skills, and the weekly live sessions
 - 📸 Instagram — [@roman.knox](https://www.instagram.com/roman.knox)
 - 📚 Knox Hub — [knoxhub.io](https://knoxhub.io)
-- 🤖 My other Claude skill — [SEO Blog Writer](https://github.com/rediumvex/seo-blog-writer-claude)
+- 🤖 My other Claude skills — [SEO Blog Writer](https://github.com/rediumvex/seo-blog-writer-claude), [AI Video Generator](https://github.com/rediumvex/ai-video-generator-claude)
 
 ---
 
