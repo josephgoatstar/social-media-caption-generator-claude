@@ -5,7 +5,7 @@
 > screenshot, or competitor post into ready-to-post captions for all 7 major
 > platforms — optimized for the signals each algorithm actually rewards.
 
-**This is the actual Claude skill I use to caption every post on [@roman.knox](https://www.instagram.com/roman.knox) (280K+ followers).**
+**This is the actual Claude skill I use to caption every post on [@theromanknox](https://www.instagram.com/theromanknox) (280K+ followers).**
 One prompt in. Captions for Instagram, TikTok, Threads, Facebook, YouTube Shorts out.
 
 ---
@@ -124,12 +124,12 @@ All based on what's actually shipping results in 2026, not 2020 best practices.
 
 ## Who built this
 
-I'm **Roman Knox**. I run the Instagram [@roman.knox](https://www.instagram.com/roman.knox) — 280K+ followers posting daily about AI, Claude Code, n8n, and automation.
+I'm **Roman Knox**. I run the Instagram [@theromanknox](https://www.instagram.com/theromanknox) — 280K+ followers posting daily about AI, Claude Code, n8n, and automation.
 
 I built this skill because I was spending 30 minutes per post writing captions for each platform separately. Now it's one prompt, 7 platforms, done.
 
-- 🎓 **[Join Knox Community on Skool](https://www.skool.com/knox-community-7232/)** — n8n library, cold outreach systems, Claude skills, and the weekly live sessions
-- 📸 Instagram — [@roman.knox](https://www.instagram.com/roman.knox)
+- 🎓 **[Join Knox Community on Skool](https://www.skool.com/knox/about)** — n8n library, cold outreach systems, Claude skills, and the weekly live sessions
+- 📸 Instagram — [@theromanknox](https://www.instagram.com/theromanknox)
 - 📚 Knox Hub — [knoxhub.io](https://knoxhub.io)
 - 🤖 My other Claude skills — [SEO Blog Writer](https://github.com/rediumvex/seo-blog-writer-claude), [AI Video Generator](https://github.com/rediumvex/ai-video-generator-claude)
 
