@@ -1,139 +1,88 @@
-# Social Media Caption Generator — Claude Skill
-![telegram-cloud-photo-size-4-5963180594780900430-y](https://github.com/user-attachments/assets/0d350edc-81f0-43b7-a153-8dcd2eba38cf)
+# Social Caption Engine — Claude Code Skill
 
-> **Social media caption generator for Claude Code.** Turn any text, script,
-> screenshot, or competitor post into ready-to-post captions for all 7 major
-> platforms — optimized for the signals each algorithm actually rewards.
+Turn any script, flyer, screenshot, competitor post, or one-line idea into ready-to-post
+copy for **Instagram, TikTok, and Discord** (plus Threads, Facebook, YouTube Shorts, X),
+built for **every format**: reels, carousels, flyers, stories, and Discord announcements.
+The skill writes in your brand voice and checks each caption with a linter.
 
-**This is the actual Claude skill I use to caption every post on [@theromanknox](https://www.instagram.com/theromanknox) (300K+ followers).**
-One prompt in. Captions for Instagram, TikTok, Threads, Facebook, YouTube Shorts out.
-
----
-
-## What it does
-
-Send it anything:
-
-- A script or raw notes
-- A screenshot or image of your post
-- A competitor's viral post (it'll write something better)
-- A brief description of your content
-- A link to an article you're repurposing
-
-You get back **ready-to-copy captions for 7 formats**, each using a different proven formula:
-
-1. **Instagram Reels** — hook-first, optimized for DM shares
-2. **Instagram Carousel** — longer, save-optimized
-3. **TikTok** — 80-char hook, completion-rate language
-4. **Threads** — conversation starter, reply-optimized
-5. **Facebook Page/Personal** — trigger-word-free for max reach
-6. **Facebook Group** — community tone, discussion question
-7. **YouTube Shorts** — title + description, search-keyword-optimized
-
-Each caption comes with a breakdown: formula name, hook type, CTA type, and which algorithm signal it optimizes for.
+> Forked from [rediumvex/social-media-caption-generator-claude](https://github.com/rediumvex/social-media-caption-generator-claude)
+> (MIT, © Roman Knox) and extended: Discord, Stories, flyers, brand profile, hook scoring,
+> and an automated caption checker.
 
 ---
 
-## Why every platform needs a different caption
+## What's new vs. upstream
 
-Most creators copy-paste the same caption to every platform. That's why their reach dies on 6 of the 7.
-
-Every algorithm rewards different signals in 2026:
-
-| Platform | #1 signal | Dead signal |
+| | Upstream v2 | This fork v3 |
 |---|---|---|
-| Instagram Reels | DM shares | Likes |
-| Instagram Carousel | Saves | Likes |
-| TikTok | Completion rate (70%+) | Hashtag spam |
-| Threads | Replies | Cross-posted content |
-| Facebook Page | 40-80 char posts | Trigger words (-70% reach) |
-| Facebook Group | Discussion questions | Links |
-| YouTube Shorts | Title SEO + retention | Clickbait |
-
-This skill bakes all of that into the output. No `#fyp`. No `#viral`. No engagement bait. No Facebook trigger words. No copy-paste.
+| Platforms | IG, TikTok, Threads, FB, YT Shorts | + **Discord**, **X** |
+| Formats | Reels, carousels (one caption each) | + **flyers** (on-graphic copy + alt text), **stories** (frame-by-frame + stickers), **Discord announcements** (markdown, timestamps, ping strategy) |
+| Voice | Generic | Reads your **`brand/brand-profile.md`** every time |
+| Output | Always all 7 platforms | Only what you ask for, or your default platforms |
+| Quality control | Checklist | 3 hooks drafted & scored per piece + **`scripts/check_caption.py`** lint (length, truncation, hashtags, bait, FB triggers, Discord pings/timestamps) |
+| Structure | One 300-line file | Lean `SKILL.md` + per-platform `references/` loaded on demand |
 
 ---
 
 ## Install
 
+**Option A: global skill (works in any project)**
 ```bash
-# Clone into your Claude skills folder
-cd ~/.claude/skills
-git clone https://github.com/rediumvex/social-media-caption-generator-claude.git social-captions
+mkdir -p ~/.claude/skills
+git clone https://github.com/josephgoatstar/social-media-caption-generator-claude.git ~/.claude/skills/social-captions
 ```
+Restart Claude Code, then use `/social-captions`.
 
-Restart Claude Code. The skill is available as `/social-captions`.
-
-### If you use gstack
-
+**Option B: caption workspace**
 ```bash
-cd ~/.claude/skills/gstack
-git clone https://github.com/rediumvex/social-media-caption-generator-claude.git social-captions
+git clone https://github.com/josephgoatstar/social-media-caption-generator-claude.git
+cd social-media-caption-generator-claude && claude
 ```
+`CLAUDE.md` tells Claude to follow the skill for any caption request in this folder.
+
+**Then do this once:** fill in `brand/brand-profile.md` with your voice, hashtags, links,
+default platforms, and Discord roles. This file has the biggest effect on quality.
 
 ---
 
 ## Usage
 
-Just send Claude the material — it figures out the rest:
-
 ```
-/social-captions here's my reel script: [paste script]
-```
-
-```
-/social-captions [paste screenshot of your carousel]
-```
-
-```
-/social-captions competitor post crushing right now: [url or text]
+/social-captions reel script: [paste]
+/social-captions [attach flyer image] instagram + discord
+/social-captions story sequence for our Friday drop
+/social-captions discord event: game night Sat 8pm ET in #voice, prize is Nitro
+/social-captions carousel: 5 mistakes beginners make with [topic]
+/social-captions competitor post doing numbers: [paste] — beat it
+/social-captions launch kit all: winter collection drops Dec 12
 ```
 
+Modifiers: `variants: 3` · `tone: hype|calm|expert|funny|raw` · `short` · `no emoji` ·
+`goal: saves|sales|attendance` · `event` / `drop` / `update` / `giveaway` / `recap` · `all`
+
+Each piece comes back with: ready-to-paste copy, on-screen hook (video/flyer/story),
+an alternate hook, and formula · hook type · CTA · signal · checked character count.
+
+### Lint a caption yourself
+```bash
+python3 scripts/check_caption.py --platform instagram --format carousel --text "..."
+python3 scripts/check_caption.py --platform discord --file announcement.md
 ```
-/social-captions topic: "how to use Claude skills for SEO blog posts"
-```
-
-You get back all 7 platforms, each with:
-
-- Ready-to-paste caption text
-- 3-5 niche hashtags (never generic)
-- Formula breakdown
-- Hook type
-- CTA type
-- Signal being optimized
-
-Then you pick, tweak, post.
 
 ---
 
-## What's inside (highlights)
-
-The skill encodes the full 2026 algorithm playbook:
-
-- **30+ caption formulas** across reach, engagement, sales, and growth goals
-- **Hook library** — provocation, curiosity, value, emotion, TikTok-specific
-- **Platform-specific length rules** (IG Reels 80-200 chars, FB Page 40-80, TikTok 100-300, etc.)
-- **Anti-patterns** — engagement bait, shadow ban triggers, format crimes
-- **Power words** library by category (urgency, trust, exclusivity, emotion)
-- **Facebook trigger word replacements** — "FREE" → "complimentary", etc.
-- **Signal hierarchy** — shares > saves > comments > watch time > likes
-
-All based on what's actually shipping results in 2026, not 2020 best practices.
-
----
-
-## Who built this
-
-I'm **Roman Knox**. I run the Instagram [@theromanknox](https://www.instagram.com/theromanknox) — 300K+ followers posting daily about AI, Claude Code, n8n, and automation.
-
-I built this skill because I was spending 30 minutes per post writing captions for each platform separately. Now it's one prompt, 7 platforms, done.
-
-- 🎓 **[Join Knox Community on Skool](https://www.skool.com/knox/about)** — n8n library, cold outreach systems, Claude skills, and the weekly live sessions
-- 📸 Instagram — [@theromanknox](https://www.instagram.com/theromanknox)
-- 🤖 My other Claude skills — [SEO Blog Writer](https://github.com/rediumvex/seo-blog-writer-claude), [AI Video Generator](https://github.com/rediumvex/ai-video-generator-claude), [Meta Ads Doctor](https://github.com/rediumvex/meta-facebook-ads-optimizer-claude)
-
----
+## Layout
+```
+SKILL.md                      # workflow, routing, output format
+brand/brand-profile.md        # YOUR voice, hashtags, links, Discord roles (fill in)
+references/
+  instagram.md  tiktok.md  discord.md  other-platforms.md
+  formats.md                  # reels, carousels, flyers, stories, launch kits
+  hooks-and-formulas.md       # hook types, formulas, CTA menu, power words
+  anti-patterns.md            # what never to write
+scripts/check_caption.py      # caption linter (stdlib Python)
+examples/example-output.md    # full worked example (flyer → IG, TikTok, Discord, Story)
+```
 
 ## License
-
-MIT — do whatever you want with it. Fork it, modify it, ship it in your product. If it helps, a ⭐ on the repo is appreciated.
+MIT. See `LICENSE`. Original work © 2026 Roman Knox.

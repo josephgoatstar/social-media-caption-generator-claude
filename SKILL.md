@@ -1,16 +1,18 @@
 ---
 name: social-captions
-version: 2.0.0
+version: 3.0.0
 description: |
-  Write algorithm-optimized captions/descriptions for social media posts and reels.
-  Supports Instagram (Reels, Feed, Carousel), TikTok, Threads, Facebook, and YouTube Shorts.
-  The user sends material (text, image, script, competitor post, screenshot) and
-  gets ready-to-use captions for ALL platforms at once, in English.
-  Use when asked to "write a caption", "write a description", "caption for instagram",
-  "описание к посту", "подпись для рилса", "описание для тикток",
-  "caption for reels", "social media post", or any caption/description writing task.
-  Also triggers when user sends an image, screenshot, or text and says something like
-  "сделай описание", "напиши подпись", "caption this", "описание для этого".
+  Engineer high-engagement captions and post copy for Instagram (Reels, Feed, Carousel,
+  Stories), TikTok (video, photo carousel, Stories), Discord (announcements, events,
+  updates, drops, polls), plus Threads, Facebook, YouTube Shorts and X. Handles every
+  post type: reels, carousels, flyers/static graphics, stories, announcements.
+  The user sends material (script, notes, image, flyer, screenshot, competitor post,
+  link, or a one-line idea) and gets ready-to-paste copy tuned to each platform's
+  ranking signals, in the user's brand voice.
+  Use when asked to "write a caption", "caption this", "write a Discord announcement",
+  "story text", "flyer copy", "post copy", "description for my reel/TikTok",
+  "hook ideas", or any social post writing task, or when the user sends an image
+  or script and asks for a caption/description/announcement.
 allowed-tools:
   - Bash
   - Read
@@ -20,295 +22,131 @@ allowed-tools:
   - Grep
 ---
 
-# /social-captions — Algorithm-Optimized Social Media Captions (v2)
+# /social-captions — Caption Engine (v3)
 
-The user sends material (text, image, script, competitor post, screenshot, or description of content).
-You analyze it and immediately generate captions for ALL 7 platforms in English.
+You turn raw material into ready-to-post copy that is engineered for the signal each
+platform and format rewards. **Default behavior: no questions, analyze and deliver.**
+Ask one short question only if a fact that would be embarrassing to get wrong is missing
+(event date/time/place, price, link, product name) — otherwise leave a clear
+`[PLACEHOLDER]` and keep going.
 
-**No questions. No menus. Just analyze and deliver.**
-
-## WORKFLOW
-
-### STEP 1: Analyze the Input
-
-Read/view whatever the user sent:
-- If it's **text/script** — extract the core topic, key message, niche, and tone
-- If it's an **image/screenshot** — describe what you see, identify the niche and key message
-- If it's a **competitor post** — analyze their approach, then write BETTER captions
-- If it's a **brief description** — expand it into full captions
-
-Write a short (2-3 sentence) analysis:
-```
-**Topic:** [what this is about]
-**Niche:** [industry/category]
-**Key message:** [the core idea to communicate]
-```
-
-### STEP 2: Generate Captions for ALL Platforms
-
-Generate captions for all 7 formats below. Each caption must use a DIFFERENT formula.
-All captions in **English only**.
-
-Output in this exact format:
+All paths below are relative to this skill's base directory.
 
 ---
 
-## 1. INSTAGRAM REELS
+## STEP 0 — Load context (silently, every time)
+
+1. Read `brand/brand-profile.md`. If it exists and is filled in, it is LAW: voice,
+   banned words, niche hashtags, default platforms, CTAs, links, Discord role names.
+   If it's missing or still the blank template, use a neutral confident voice and
+   mention once at the end: "Fill in `brand/brand-profile.md` and every caption will
+   sound like you."
+2. Read only the reference files you need for this request:
+   | Need | File |
+   |---|---|
+   | Instagram (any format) | `references/instagram.md` |
+   | TikTok (any format) | `references/tiktok.md` |
+   | Discord (any post) | `references/discord.md` |
+   | Threads / Facebook / YouTube Shorts / X | `references/other-platforms.md` |
+   | Flyers, stories, carousels, reels — format-level craft | `references/formats.md` |
+   | Hooks, formulas, CTAs, power words | `references/hooks-and-formulas.md` |
+   | What never to write | `references/anti-patterns.md` |
+   Always read `references/anti-patterns.md` and `references/hooks-and-formulas.md`.
+
+## STEP 1 — Analyze the input
+
+Whatever the user sent (text, script, image, flyer, screenshot, competitor post, link):
 
 ```
-[Ready to copy-paste caption text]
-
-[3-5 hashtags]
+**Topic:** …            **Format:** reel | carousel | flyer/static | story | announcement | text post | …
+**Audience:** …         **Goal:** reach | engagement | saves | clicks/sales | attendance | community
+**Key message:** one sentence the viewer must walk away with
+**Proof/specifics available:** numbers, names, results, dates — list them (specifics beat adjectives)
 ```
-> Formula: [name] | Hook: [type] | CTA: [type] | Optimizes for: [signal]
+
+- **Image/flyer:** read every word on it. Never contradict details printed on the
+  graphic; don't repeat the whole flyer in the caption — add what the image can't say.
+- **Competitor post:** name the formula they used and why it works, then beat it with a
+  sharper hook, more specific proof, and a better-matched CTA. Never copy phrasing.
+- **Script/voiceover:** pull the hook from the strongest line, not the first line.
+
+## STEP 2 — Decide what to produce (routing)
+
+1. If the user named platforms and/or a format → produce exactly those.
+2. Otherwise → use `default_platforms` from the brand profile.
+3. If no profile → default bundle: **Instagram + TikTok + Discord** for the detected
+   format. `all` → every platform in the references.
+
+Format → deliverable map (details in `references/formats.md`):
+
+| Format | Deliver |
+|---|---|
+| Reel / short video | On-screen hook text (≤ 7 words) + caption + hashtags; TikTok version adds spoken-hook line |
+| Carousel / photo mode | Cover-slide headline + per-slide outline (if not supplied) + save-optimized caption |
+| Flyer / static graphic | On-graphic copy hierarchy (headline / sub / details / CTA) + caption + alt text |
+| Story (IG/TikTok) | Frame-by-frame plan: on-screen text per frame + sticker per frame + link/CTA frame |
+| Discord announcement | Formatted message (markdown, ping strategy, timestamps) + optional short teaser for socials |
+| Text post | Native text for Threads/X/FB/Discord |
+
+## STEP 3 — Engineer each piece (the craft loop)
+
+For every platform/format:
+
+1. **Draft 3 hooks** using 3 different hook types from the hook library. Score each
+   silently 1–5 on: *stops the scroll*, *specific*, *true to content*, *voice match*.
+   Keep the best. Show the runner-up as "Alt hook".
+2. **Choose a formula** that fits the goal. Never reuse the same formula across
+   platforms in one response.
+3. **Write the body** — one idea, short lines, concrete nouns and numbers, no filler
+   ("In today's video…", "Hey guys", "Let's dive in").
+4. **One CTA**, matched to the platform's top signal (DM share, save, comment, reply,
+   follow, click, RSVP, react).
+5. **Hashtags/tags** per platform rules — niche, from the brand list where possible.
+6. **Verify with the checker** (mandatory for anything with a length rule):
+   ```bash
+   python3 scripts/check_caption.py --platform instagram --format reel --file /tmp/cap.txt
+   ```
+   (or `--text "..."`). Fix every `FAIL` and reconsider every `WARN` before showing.
+   Platforms: `instagram tiktok discord threads facebook facebook-group youtube x`.
+   Formats: `reel feed carousel story flyer announcement post title`.
+
+## STEP 4 — Output format
+
+For each platform:
+
+---
+## [PLATFORM] — [FORMAT]
+
+**On-screen hook:** `[≤ 7 words]`   *(video/flyer/story only)*
+
+```
+[ready-to-paste copy, exact line breaks]
+
+[hashtags/tags if applicable]
+```
+**Alt hook:** [runner-up first line]
+> Formula: [name] · Hook: [type] · CTA: [type] · Optimizes: [signal] · [N] chars ✅
 
 ---
 
-## 2. INSTAGRAM CAROUSEL
+Discord output: put the message in a ```` ```md ```` block so markdown survives
+copy-paste, then a one-line note on ping strategy and any timestamp used.
 
-```
-[Ready to copy-paste caption text]
+Close with ONE line: "Want a different angle? Say *spicier*, *calmer*, *shorter*,
+*more expert*, *more hype*, or name a platform to regenerate."
 
-[3-5 hashtags]
-```
-> Formula: [name] | Hook: [type] | CTA: [type] | Optimizes for: [signal]
+## Modifiers the user can add anytime
 
----
+`variants: N` (N full versions per platform) · `tone: hype|calm|expert|funny|raw` ·
+`short` · `long` · `no emoji` · `no hashtags` · `goal: sales|saves|attendance|growth` ·
+`series: day X of Y` · `launch` / `event` / `drop` / `giveaway` / `update` / `recap`
+(Discord-heavy templates in `references/discord.md`) · `all` (every platform).
 
-## 3. TIKTOK
+## Non-negotiables
 
-```
-[Ready to copy-paste caption text]
-
-[3-5 hashtags]
-```
-> Formula: [name] | Hook: [type] | CTA: [type] | Optimizes for: [signal]
-
----
-
-## 4. THREADS
-
-```
-[Ready to copy-paste caption text]
-
-[1 topic tag]
-```
-> Formula: [name] | Hook: [type] | CTA: [type] | Optimizes for: [signal]
-
----
-
-## 5. FACEBOOK (Page/Personal)
-
-```
-[Ready to copy-paste caption text]
-```
-> Formula: [name] | Hook: [type] | CTA: [type] | Optimizes for: [signal]
-
----
-
-## 6. FACEBOOK GROUP
-
-```
-[Ready to copy-paste caption text]
-```
-> Formula: [name] | Hook: [type] | CTA: [type] | Optimizes for: [signal]
-
----
-
-## 7. YOUTUBE SHORTS
-
-**Title:**
-```
-[Ready to copy-paste title — max 100 characters]
-```
-
-**Description:**
-```
-[Ready to copy-paste description]
-
-[3-5 hashtags]
-```
-> Formula: [name] | Hook: [type] | CTA: [type] | Optimizes for: [signal]
-
----
-
-### STEP 3: End with
-
-"Want me to adjust any of these? I can change the tone, try different formulas, make them more provocative/friendly/expert, or regenerate for a specific platform."
-
----
-
-## PLATFORM RULES (CRITICAL — follow exactly)
-
-### INSTAGRAM REELS
-- **Length:** 80-200 characters. Short hook = video title
-- **Structure:** Hook (first 125 chars before truncation) → 1-2 sentences max → CTA
-- **Hook:** Must stop the scroll in 5-10 words. Use: conflict, transformation, curiosity gap, bold statement, or shocking stat
-- **CTA:** Optimize for DM shares ("send to a friend who...") or saves ("save for later") — 10x more valuable than likes
-- **Hashtags:** 3-5 niche hashtags IN the caption. Never #fyp, #viral, #instagood, #like4like
-- **SEO:** Primary keyword in first 2 sentences
-- **NO:** Engagement bait, emoji in first line, generic phrases
-
-### INSTAGRAM CAROUSEL
-- **Length:** 300-900 characters. Longer captions work — users are already engaged
-- **Structure:** Hook → Expanded value complementing slides → Save CTA
-- **CTA:** Always optimize for saves. Carousels with save CTA get +68% saves
-- **Body:** Lists, step-by-step, checklists. Structure with emoji-bullets or numbers
-
-### TIKTOK
-- **Length:** 100-300 characters. First 80-100 visible before truncation
-- **Structure:** Hook (80 chars) → 1-2 short sentences → CTA + 3-5 emoji (+33% engagement)
-- **SEO:** voiceover > on-screen text > caption > hashtags in importance
-- **Keywords:** Primary keyword in first 80 characters
-- **Hashtags:** 3-5 MAX. Formula: 1 niche + 1 thematic + 1 trending. NEVER #fyp, #foryou, #viral
-- **Completion rate:** 70%+ needed for viral. Caption should tease "watch till end"
-- **CTA:** Questions get +44% comments
-
-### THREADS
-- **Length:** 100-280 characters optimal (max 500)
-- **Structure:** One clear idea. Conversational tone, like a group chat
-- **Tags:** Only 1 topic tag per post. Can be multi-word. Niche > broad
-- **Engagement:** Replies are #1 signal. Provoke conversation
-- **Links:** +17% better with links now
-- **NO:** Engagement bait, copy-paste from other platforms
-
-### FACEBOOK (Page/Personal)
-- **Length:** 40-80 characters for max reach
-- **Structure:** Ultra-short hook → value → discussion question
-- **Hashtags:** 0-2 max or none
-- **AVOID trigger words:** "buy now", "limited time", "FREE" (caps), "click here", "money", "income", "contest", "giveaway"
-- **SAFE replacements:** "available today", "complimentary", "no cost", "learn more"
-- **Trigger word impact:** 1-2 words = -20-30% reach, 3-5 = -40-60%, 6+ = -70-95%
-
-### FACEBOOK GROUP
-- **Length:** 200-500 characters. Longer, contextual
-- **Reach:** 30-50% of members (vs 1-2% for Pages)
-- **Style:** Community language ("who else has experienced...", "curious what you all think about...")
-- **CTA:** Open discussion questions
-
-### YOUTUBE SHORTS
-- **Title length:** 40-70 characters optimal (max 100). Title is the #1 SEO signal — treat it like a search headline
-- **Title structure:** Primary keyword first → benefit or curiosity gap → NO clickbait that misleads (YouTube penalizes)
-- **Title formulas:** "[Keyword]: [what viewer gets]" / "How to [result] in [time]" / "[Number] [topic] secrets" / "Why [common belief] is wrong"
-- **Description length:** 150-300 characters. First 100 chars visible before "Show more" — front-load the hook
-- **Description structure:** Hook sentence (repeats/expands title) → 1-2 sentences of value → CTA → hashtags
-- **Hashtags:** 3-5 MAX, placed at the end of description. 1 broad category + 1-2 niche + 1 topic-specific. NEVER #shorts as the only tag
-- **SEO:** YouTube is a search engine. Match exact phrases people type: "how to use Claude", "AI productivity tips", "Claude tutorial"
-- **CTA:** Subscribe prompt or "watch [linked video] for more" — channel growth > likes for Shorts
-- **Completion rate:** Critical metric. Title must match video content exactly or retention tanks
-- **NO:** Misleading titles, keyword stuffing, #shorts #viral #fyp as primary tags
-
----
-
-## CAPTION FORMULAS (use different ones for each platform)
-
-### For REACH:
-1. **Trend-Hook + Benefit:** "[Trend]: [benefit] for [audience]"
-2. **Curiosity X vs Y:** "[A] vs [B]: which works better for [situation]?"
-3. **Myth Buster:** "Myth: [belief]. Fact: [rebuttal]"
-4. **Data Teaser:** "[Number] → [result] in [timeframe]"
-5. **What Works Now:** "What works in [niche] right now: [1], [2], [3]"
-6. **Watch Time Promise:** "In [time] you'll get [result]. Watch till end for [bonus]"
-7. **Beginner's Path:** "New to [field]: [step 1] → [step 2] → [step 3]"
-
-### For ENGAGEMENT:
-1. **Micro-Decision:** "Are you [A] or [B]? And why?"
-2. **Hot Take:** "Unpopular opinion: [thesis]. Agree or disagree?"
-3. **Rate These 3:** "Rank by importance: [1], [2], [3]"
-4. **This or That:** "[A] or [B] for [situation]? Your pick?"
-5. **Fill in the Blank:** "Complete: 'The best advice about [topic] was...'"
-
-### For SALES:
-1. **POOPC:** "Struggling with [pain]? [Result] in [time] with [product]"
-2. **Objection Destroyer:** "Think '[objection]'? Actually, [counter]"
-3. **Social Proof Lead:** "'[Client quote]'. Here's how:"
-
-### For GROWTH:
-1. **Series:** "Day [1/N] of [topic]. Follow for the rest"
-2. **Lead Magnet:** "Free [resource] on [topic]. Comment '[word]'"
-3. **Cliffhanger:** "10 lessons from [experience]. Today — first 3. Rest for followers"
-
----
-
-## HOOK LIBRARY
-
-### Provocation:
-- "Stop [doing X] — here's why"
-- "Nobody talks about this [topic] hack"
-- "You're doing [X] wrong"
-
-### Curiosity:
-- "Here's what no one tells you about [topic]"
-- "Mistake #1 that kills your [metric]"
-- "I tested [N] methods. These [N] destroyed the rest"
-
-### Value:
-- "Save this for when [situation]"
-- "[N] things I wish I knew before [X]"
-- "In [time] I [result]. Here's how:"
-
-### Emotion:
-- "Honest truth about [topic]"
-- "One change flipped everything"
-- "Unpopular opinion: [bold claim]"
-
-### TikTok-specific:
-- "Stop scrolling if you [situation]"
-- "POV: you just discovered [thing]"
-- "I spent [money/time] so you don't have to"
-
----
-
-## ANTI-PATTERNS (NEVER do these)
-
-### Engagement bait (-50-90% reach on ALL platforms):
-- "Like if you agree" / "Comment YES" / "Tag 3 friends"
-- "Share before they delete this" / "React with [emoji] if..."
-
-### Shadow ban triggers:
-- Violence words (even in innocent context)
-- Adult content words
-- Financial promises: "guaranteed income", "get rich quick"
-- Letter substitution does NOT help — algorithms detect it
-
-### Format crimes:
-- Same hashtags on every post (spam flag)
-- More than 5 hashtags (limit since late 2025)
-- Wall of text without line breaks
-- #fyp, #foryou, #viral — useless and harmful
-
----
-
-## POWER WORDS (use 2-3 per caption)
-
-| Category | Words |
-|----------|-------|
-| Urgency | Now, Today, Limited, Last chance |
-| Trust | Proven, Tested, Research-backed, Results |
-| Exclusivity | Secret, Hidden, Insider, Behind-the-scenes |
-| Emotion | Shocking, Surprising, Honest, Raw, Real |
-| Action | Discover, Unlock, Transform, Master, Grab |
-| Value | Free, Bonus, Cheat sheet, Blueprint, Toolkit |
-
----
-
-## SIGNAL HIERARCHY (all platforms, 2025-2026)
-
-1. **Shares/DM sends** — strongest (~10x a like)
-2. **Saves** — very strong, especially Instagram
-3. **Comments** — strong, especially meaningful ones
-4. **Watch time / Completion rate** — dominant for video (70%+ for viral)
-5. **Likes** — weakest, "vanity metric"
-
-## QUALITY CHECKLIST (verify before presenting)
-
-- [ ] Hook in first 80-125 characters
-- [ ] 1-3 SEO keywords naturally integrated
-- [ ] ONE clear CTA per caption
-- [ ] 2-3 power words (not more)
-- [ ] 3-5 niche hashtags (not generic) where applicable
-- [ ] Zero engagement bait
-- [ ] Zero shadow ban triggers
-- [ ] Zero Facebook trigger words (for FB captions)
-- [ ] Short paragraphs with line breaks
-- [ ] Different formula for each platform
+- Hook lands in the first line. Visible-before-truncation zone must make sense alone.
+- One clear CTA. Zero engagement bait. Zero generic hashtags (#fyp, #viral, #explore…).
+- Specific > clever. A number, name, or result beats any adjective.
+- Never invent facts, stats, testimonials, prices, or dates. Use `[PLACEHOLDER]`.
+- Each platform gets native copy — never the same caption pasted across platforms.
+- Respect the brand profile's banned words and voice over any rule in this file.
