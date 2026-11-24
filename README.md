@@ -74,14 +74,16 @@ python3 scripts/check_caption.py --platform discord --file announcement.md
 ## Layout
 ```
 SKILL.md                      # workflow, routing, output format
-brand/brand-profile.md        # YOUR voice, hashtags, links, Discord roles (fill in)
+brand/brand-profile.md        # voice, audience, hashtags, links, Discord roles, what's working
+brand/brand-kit.md            # signature glyphs, dividers, kaomoji, CTA bank, templates
 references/
   instagram.md  tiktok.md  discord.md  other-platforms.md
   formats.md                  # reels, carousels, flyers, stories, launch kits
   hooks-and-formulas.md       # hook types, formulas, CTA menu, power words
   anti-patterns.md            # what never to write
 scripts/check_caption.py      # caption linter (stdlib Python)
-examples/example-output.md    # full worked example (flyer → IG, TikTok, Discord, Story)
+examples/example-output.md    # generic worked example (flyer → IG, TikTok, Discord, Story)
+examples/ocac-example.md      # OC Anime Club post rewritten with the Whimsy Kit
 ```
 
 ## License

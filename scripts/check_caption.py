@@ -16,7 +16,7 @@ import sys
 RULES = {
     ("instagram", "reel"): (80, 200, 2200, 125, 5),
     ("instagram", "feed"): (60, 600, 2200, 125, 5),
-    ("instagram", "flyer"): (60, 600, 2200, 125, 5),
+    ("instagram", "flyer"): (60, 900, 2200, 125, 5),  # event details + credits run longer
     ("instagram", "carousel"): (300, 900, 2200, 125, 5),
     ("instagram", "story"): (1, 80, None, None, 0),  # per-frame text
     ("tiktok", "reel"): (100, 300, 4000, 90, 5),
@@ -61,6 +61,7 @@ RISKY = ["guaranteed income", "get rich quick", "100% guaranteed", "risk-free",
 EMOJI_RE = re.compile(
     "[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF←-⇿⬀-⯿]")
 HASHTAG_RE = re.compile(r"(?<![\w&])#(\w+)", re.UNICODE)
+FANCY_RE = re.compile("[\U0001D400-\U0001D7FF]")  # Mathematical Alphanumeric Symbols
 
 
 def check(text, platform, fmt):
@@ -137,6 +138,16 @@ def check(text, platform, fmt):
     # Emoji in first char for reels
     if fmt == "reel" and first_line and EMOJI_RE.match(first_line):
         results.append(("WARN", "Caption starts with an emoji — lead with words"))
+
+    # Fancy Unicode "fonts" (𝔟𝔩𝔞𝔠𝔨𝔩𝔢𝔱𝔱𝔢𝔯, 𝒔𝒄𝒓𝒊𝒑𝒕, 𝚖𝚘𝚗𝚘…) aren't searchable or screen-reader friendly
+    fancy_lines = [ln for ln in body.splitlines() if FANCY_RE.search(ln)]
+    if fancy_lines:
+        if FANCY_RE.search(first_line) and not re.search(r"[A-Za-z]{3,}", first_line):
+            results.append(("WARN", "Hook line is fancy-font only — not searchable; add plain-text event name"))
+        if len(fancy_lines) > 1:
+            results.append(("WARN", f"{len(fancy_lines)} fancy-font lines — keep it to one decorative line"))
+    if "🔞" in body:
+        results.append(("WARN", "🔞 can read as adult content to moderation — use 🪪 18+ instead"))
 
     # Wall of text
     for para in re.split(r"\n\s*\n", body):

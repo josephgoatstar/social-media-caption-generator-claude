@@ -41,6 +41,9 @@ All paths below are relative to this skill's base directory.
    If it's missing or still the blank template, use a neutral confident voice and
    mention once at the end: "Fill in `brand/brand-profile.md` and every caption will
    sound like you."
+   If `brand/brand-kit.md` exists, read it too and apply its signatures, glyphs,
+   templates, and checklist to every piece. Brand kit formatting beats the generic
+   formatting advice in `references/`, but never the hard platform limits.
 2. Read only the reference files you need for this request:
    | Need | File |
    |---|---|
@@ -102,6 +105,7 @@ For every platform/format:
 4. **One CTA**, matched to the platform's top signal (DM share, save, comment, reply,
    follow, click, RSVP, react).
 5. **Hashtags/tags** per platform rules — niche, from the brand list where possible.
+   **Credits:** keep every @handle the user gives exactly; never guess one.
 6. **Verify with the checker** (mandatory for anything with a length rule):
    ```bash
    python3 scripts/check_caption.py --platform instagram --format reel --file /tmp/cap.txt

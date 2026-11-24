@@ -22,7 +22,7 @@ before "… more" (Reels show roughly 1–2 lines over the video).
 - **Don't:** start with an emoji, "Hey guys", or restate the on-screen text word-for-word.
 
 ## Feed (single image / flyer)
-- **Length:** 125–600 chars. The first 125 chars must work alone.
+- **Length:** 125–600 chars (event flyers with lineup + details: up to ~900). The first 125 chars must work alone.
 - Image should say the *what*; caption adds the *why*, story, or detail the image can't.
 - For flyers/events: caption = hook + 1 line of value + logistics recap (date · time ·
   place · price) + CTA. See `formats.md` → Flyers.
