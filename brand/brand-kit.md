@@ -24,6 +24,11 @@ Everything below is copy-paste ready.
 
 Community/meme posts use at least #3 and #5.
 
+**Reels exception (short captions, details are in the video):** lead with words, not an
+emoji, because only ~1 line shows over the video. Write it as `event name in city 🫧 hook`, then
+compress the details to two lines (`day date · time · Venue` / `free · 18+ · RSVP + discord in bio`),
+then the send CTA, the sign-off and the tags. Skip the ⟡ headers.
+
 ## 2. Glyph palette
 
 ```
