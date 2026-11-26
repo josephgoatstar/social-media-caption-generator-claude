@@ -24,6 +24,27 @@ Hard limits: caption up to 4,000 chars · ~first line visible (≈80–100 chars
   "Send this to…" gets shares; "Part 2?" only if you'll actually post it.
 - Emoji: 1–3, at line ends, never replacing keywords.
 
+## Edit structure for retention (advise on this when the user describes a video)
+The caption can't save a video that loses people at 0:05. When a user describes an edit:
+- **First frame = motion + the subject.** Never open on a black or text-only card.
+- **The premise has to keep paying off after the joke lands.** Use a sequence of
+  reveals (one every 1.5–2 s, labeled when it adds keywords), escalate, and end on the
+  strongest shot so the loop back to frame 1 feels seamless.
+- **Re-hook at the usual drop-off point (3–5 s):** a beat drop, a new text line, or a hard cut.
+  Only tease "wait for the last one" if the last one really is the best.
+- **Length:** as short as the payoff allows. 8–12 s for meme edits and dance edits.
+- **End frame gives strangers a reason to follow** (who we are + what's next).
+
+## Reading TikTok analytics (when the user shares numbers)
+| Pattern | Likely meaning | Fix |
+|---|---|---|
+| High like rate, avg watch < ½ video, low "watched full" | Viewers liked the premise but the payoff ended early | Restructure the edit (above) and repost as a new video |
+| Steep drop at one timestamp | That moment kills it | Cut or re-hook right there |
+| For You ≳ 90% of traffic | Distribution is fine, nothing is restricting reach | The issue is the content, not the account |
+| For You near 0% | Possibly not eligible for For You | Check notifications and account status |
+| Search share growing | Keyword caption and on-screen text are working | Keep doing keyword-first captions |
+| 0 new followers | No reason to follow | End card, series framing, profile pinned posts |
+
 ## Photo mode (carousel)
 - **Title** (≤ 90 chars): the keyword headline.
 - **Slide 1 text:** the hook, big and short. Last slide: CTA or "save for later."

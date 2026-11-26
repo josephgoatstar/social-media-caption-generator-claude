@@ -103,6 +103,11 @@ decor, cosplayers, photographers. Use their @handles exactly as given and never 
 - **Takeaway:** shares are about 60–80% of likes on our event posts. People DM them
   to friends to plan. Every event caption should hand them the message to send.
   Comments are low, so add an easy question when engagement is the goal.
+- **TikTok Miku group edit (19 s, Nov 2026):** 269 views and about 70 likes (strong
+  like rate) from 96% For You traffic, but the average watch was 6.6 s (35%), only
+  3.2% watched the full video, most viewers left at 0:05, and it gained 0 followers.
+  **Lesson:** our meme premises hook strangers. Edits need to keep paying off after
+  the joke (reveals, a re-hook at 3–5 s, 8–12 s length) and end with a reason to follow.
 
 ## Example captions (ours)
 ```
