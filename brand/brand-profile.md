@@ -75,7 +75,9 @@
 - KH Halloween Town Rave announcement: 2,200 likes · 1,807 shares · 103 reposts · 61 comments
 - KH Halloween Town Rave early bird tickets sold out
 - Sip & Social speed friending: our first-ever speed friending event, capped at 70 people
-- [add member count, event count, and other real milestones here]
+- Founded March 2026, starting as "one person with a dream"
+- 1,500+ members and 20+ events by Thanksgiving 2026
+- [add new milestones here as they happen]
 
 ## Content pillars
 1. **Event announcements** (flyer posts, reels, carousels)
